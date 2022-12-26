@@ -6,14 +6,34 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "check": "prettier --check .",
+    "format": "prettier --write .",
+    "eslint": "eslint . --ext .js --ext .jsx --ext .ts --ext .tsx",
+    "create-env": "printenv > .env"
   },
   "dependencies": {
     "@next/font": "13.1.1",
-    "eslint": "8.30.0",
+    "bootstrap": "^5.2.3",
+    "D": "^1.0.0",
     "eslint-config-next": "13.1.1",
+    "eslint-config-prettier": "^8.5.0",
+    "firebase": "^9.15.0",
     "next": "13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-bootstrap": "^2.7.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.7.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.30.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.31.11",
+    "husky": "^8.0.0",
+    "postcss": "^8.4.20",
+    "prettier": "^2.8.1",
+    "tailwindcss": "^3.2.4"
   }
 }
