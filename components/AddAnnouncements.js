@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddAnnouncement from "./AddAnnouncement";
+import Announcement from "./Announcement";
 import { FaPlus } from "react-icons/fa";
 
 const AddAnnouncements = () => {
@@ -11,9 +11,9 @@ const AddAnnouncements = () => {
         onClick={() => setVisible(true)}
         className="flex justify-center items-center"
       >
-        Add Announcement <FaPlus />
+        Announcement <FaPlus />
       </button>
-      {visible && <AddAnnouncement setVisible={setVisible} />}
+      {visible && <Announcement setVisible={setVisible} />}
     </div>
   );
 };
