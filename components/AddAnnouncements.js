@@ -13,7 +13,9 @@ const AddAnnouncements = () => {
       >
         Announcement <FaPlus />
       </button>
-      {visible && <Announcement setVisible={setVisible} />}
+      {visible && (
+        <Announcement ops={operation} resource={data} setVisible={setVisible} />
+      )}
     </div>
   );
 };
