@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install",
     "check": "prettier --check .",
     "format": "prettier --write .",
     "eslint": "eslint . --ext .js --ext .jsx --ext .ts --ext .tsx",
