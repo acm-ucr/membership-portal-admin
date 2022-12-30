@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import Announcement from "./Announcement";
 
 const Announcements = () => {
   const [announcements, setAnnouncements] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [data, setData] = useState({});
+  const [operation, setOperation] = useState("view");
 
   useEffect(() => {
     axios
@@ -18,10 +22,22 @@ const Announcements = () => {
 
   return (
     <div className="w-11/12">
+      {visible && (
+        <Announcement
+          ops={"view"}
+          announcement={data}
+          setVisible={setVisible}
+        />
+      )}
       <Row className="flex justify-start items-center">
         {announcements.map((announcement, index) => (
           <Col
             key={index}
+            onClick={() => {
+              setData(announcement);
+              setVisible(true);
+              setOperation(operation);
+            }}
             className={`bg-acm-blue m-2 hover:cursor-pointer whitespace-nowrap no-underline text-white font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:scale-105`}
           >
             <p className="m-0">{announcement.title}</p>

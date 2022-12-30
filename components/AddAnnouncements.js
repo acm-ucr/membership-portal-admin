@@ -13,7 +13,7 @@ const AddAnnouncements = () => {
       >
         Announcement <FaPlus />
       </button>
-      {visible && <Announcement setVisible={setVisible} />}
+      {visible && <Announcement ops={"add"} setVisible={setVisible} />}
     </div>
   );
 };
