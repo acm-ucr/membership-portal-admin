@@ -1,8 +1,8 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Link from "next/link"
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
 
 const Navigation = () => {
   return (
@@ -22,9 +22,7 @@ const Navigation = () => {
           />
         </Link>
         <div className="hidden lg:block">
-          <p className="m-0 font-lexend font-medium text-2xl">
-            Admin Portal
-          </p>
+          <p className="m-0 font-lexend font-medium text-2xl">Admin Portal</p>
         </div>
       </Navbar.Brand>
 
