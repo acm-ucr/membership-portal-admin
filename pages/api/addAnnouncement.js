@@ -1,4 +1,3 @@
-import React from "react";
 import { addDoc, Timestamp, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 
