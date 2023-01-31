@@ -1,20 +1,114 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import { Dropdown } from "react-bootstrap";
+import axios from "axios";
 
 const Announcement = ({ announcement, setVisible, ops }) => {
+  const [message, setMessage] = useState("");
+  const [showSnackBar, setShowSnackBar] = useState(false);
   const [operation, setOperation] = useState(ops);
   const [formData, setFormData] = useState({
-    eventName: "",
-    eventType: "",
-    eventDay: "",
-    eventDate: "",
-    eventTime: "",
-    eventLocation: "",
+    eventName: announcement ? announcement.title : "Event Name",
+    eventType: announcement ? announcement.type : "",
+    eventWeekDay: announcement
+      ? new Date(announcement.time.seconds * 1000).toString().substring(0, 3)
+      : "",
+    eventYear: announcement
+      ? new Date(announcement.time.seconds * 1000).getFullYear()
+      : "2022",
+    eventMonth: announcement
+      ? new Date(announcement.time.seconds * 1000).getMonth() + 1
+      : "1",
+    eventDay: announcement
+      ? new Date(announcement.time.seconds * 1000)
+          .toLocaleDateString()
+          .substring(3, 5)
+      : "1",
+    eventHour: announcement
+      ? new Date(announcement.time.seconds * 1000)
+          .toLocaleTimeString()
+          .substring(0, 2)
+      : "12",
+    eventMinute: announcement
+      ? new Date(announcement.time.seconds * 1000)
+          .toLocaleTimeString()
+          .substring(3, 5)
+      : "00",
+    eventAP: announcement
+      ? new Date(announcement.time.seconds * 1000)
+          .toLocaleTimeString()
+          .substring(9, 11)
+      : "PM",
+    eventTime: announcement
+      ? new Date(announcement.time.seconds * 1000).toLocaleTimeString()
+      : "",
+    eventLocation: announcement ? announcement.location : "",
+    eventDetails: announcement ? announcement.details : "",
   });
+  const snackBar = () => {
+    setShowSnackBar(true);
+    setTimeout(() => {
+      setShowSnackBar(false);
+      setMessage("");
+    }, 3000);
+  };
   const handleSubmit = (event) => {
+    console.log("submit");
     event.preventDefault();
+
+    if (
+      formData.eventName === "" ||
+      formData.eventAP === "" ||
+      formData.eventDetails === "" ||
+      formData.eventLocation === "" ||
+      formData.eventType === ""
+    ) {
+      setMessage("Please fill all the fields");
+      snackBar();
+      return;
+    }
+    if (
+      parseInt(formData.eventMonth) > 12 ||
+      parseInt(formData.eventMonth) < 1
+    ) {
+      setMessage("Invalid Month");
+      snackBar();
+      return;
+    }
+    if (parseInt(formData.eventDay) > 31 || parseInt(formData.eventDay) < 1) {
+      setMessage("Invalid Day");
+      snackBar();
+      return;
+    }
+    const result = {
+      details: formData.eventDetails,
+      location: formData.eventLocation,
+      title: formData.eventName,
+      time:
+        new Date(
+          formData.eventYear +
+            "-" +
+            formData.eventMonth +
+            "-" +
+            formData.eventDay
+        ).getTime() / 1000,
+      type: formData.eventType,
+    };
+    console.log(result);
+    setOperation("view");
+    if (ops == "add") {
+      axios
+        .post("/api/addAnnouncement", { result })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     console.log(formData);
   };
+
   const handleChange = (event) => {
     if (event.target.name == "eventType") {
       console.log(event.target.value);
@@ -23,6 +117,24 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       ...prevData,
       [event.target.name]: event.target.value,
     }));
+    if (
+      event.target.name === "eventYear" ||
+      event.target.name === "eventMonth" ||
+      event.target.name === "eventDay"
+    ) {
+      setFormData((prevData) => ({
+        ...prevData,
+        eventWeekDay: new Date(
+          formData.eventYear +
+            "-" +
+            formData.eventMonth +
+            "-" +
+            formData.eventDay
+        )
+          .toString()
+          .substring(0, 3),
+      }));
+    }
   };
   return (
     <>
@@ -68,10 +180,10 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               </label>
               <input
                 name="eventName"
-                type="name"
-                id="name"
-                value={announcement.title}
-                placeholder={announcement.title}
+                type="eventName"
+                id="eventName"
+                value={formData.eventName}
+                placeholder={formData.eventName}
                 disabled={operation === "view"}
                 className="m-1 w-11/12 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
                 onChange={handleChange}
@@ -82,177 +194,201 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               >
                 event type
               </label>
+              {operation === "view" ? (
+                <p className="m-1 w-1/6 bg-[#DDDDDD] rounded-lg font-lexend text-acm-black text-lg font-light px-2 pt-0 pb-0 ">
+                  {formData.eventType}
+                </p>
+              ) : (
+                <Dropdown className="">
+                  <Dropdown.Toggle
+                    id="eventType"
+                    className="m-1 min:w-1/6 bg-white rounded-lg font-lexend !text-acm-black text-lg font-light px-2 pt-1 pb-1 ring-0 outline-0 border-0"
+                  >
+                    {formData.eventType}
+                  </Dropdown.Toggle>
 
-              <div className="ml-3 flex items-center">
-                <div className="dark:bg-acm-white rounded-full w-3 h-3 flex flex-shrink-1 justify-center items-center relative">
-                  <input
-                    id="eventType"
-                    type="radio"
-                    value="generalMeeting"
-                    placeholder={formData.eventType}
-                    disabled={operation === "view"}
-                    name="eventType"
-                    className="checked:appearance-none focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:ring-acm-lightpurple focus:outline-none flex rounded-full absolute cursor-pointer w-full h-full"
-                    onChange={handleChange}
-                  />
-                  <div className=" border-4 border-acm-lightpurple rounded-full w-full h-full"></div>
-                </div>
-                <label
-                  htmlFor="generalMeeting"
-                  className="font-lexend text-acm-black text-lg font-light ml-3 mt-1 mb-1"
-                >
-                  general meeting
-                </label>
-              </div>
-              <div className="ml-3 flex items-center">
-                <div className="dark:bg-acm-white rounded-full w-3 h-3 flex flex-shrink-1 justify-center items-center relative">
-                  <input
-                    id="eventType"
-                    type="radio"
-                    value="social"
-                    name="eventType"
-                    disabled={operation === "view"}
-                    className="checked:appearance-none focus:opacity-100 focus:ring-2 focus:rounded-full focus:ring-offset-2 focus:ring-acm-green focus:outline-none flex rounded-full absolute cursor-pointer w-full h-full"
-                    onChange={handleChange}
-                  />
-                  <div className="border-4 border-acm-green rounded-full w-full h-full"></div>
-                </div>
-                <label
-                  htmlFor="social"
-                  className="font-lexend text-acm-black text-lg font-light ml-3 mt-1 mb-1"
-                >
-                  social
-                </label>
-              </div>
-              <div className="ml-3 flex items-center">
-                <div className="dark:bg-acm-white rounded-full w-3 h-3 flex flex-shrink-1 justify-center items-center relative">
-                  <input
-                    id="eventType"
-                    type="radio"
-                    value="workshop"
-                    name="eventType"
-                    disabled={operation === "view"}
-                    className="checked:appearance-none focus:opacity-100 focus:ring-2 focus:rounded-full focus:ring-offset-2 focus:ring-acm-yellow focus:outline-none flex rounded-full absolute cursor-pointer w-full h-full"
-                    onChange={handleChange}
-                  />
-                  <div className="border-4 border-acm-yellow rounded-full w-full h-full"></div>
-                </div>
-                <label
-                  htmlFor="workshop"
-                  className="font-lexend text-acm-black text-lg font-light ml-3 mt-1 mb-1"
-                >
-                  workshop
-                </label>
-              </div>
-              <div className="ml-3 flex items-center">
-                <div className="dark:bg-acm-white rounded-full w-3 h-3 flex flex-shrink-1 justify-center items-center relative">
-                  <input
-                    id="eventType"
-                    type="radio"
-                    value="project"
-                    name="eventType"
-                    disabled={operation === "view"}
-                    className="checked:appearance-none focus:opacity-100 focus:ring-2 focus:rounded-full focus:ring-offset-2 focus:ring-acm-purple focus:outline-none flex rounded-full absolute cursor-pointer w-full h-full"
-                    onChange={handleChange}
-                  />
-                  <div className="border-4 border-acm-purple rounded-full w-full h-full"></div>
-                </div>
-                <label
-                  htmlFor="project"
-                  className="font-lexend text-acm-black text-lg font-light ml-3 mt-1 mb-1"
-                >
-                  project
-                </label>
-              </div>
-              <div className="ml-3 flex items-center">
-                <div className="dark:bg-acm-white rounded-full w-3 h-3 flex flex-shrink-1 justify-center items-center relative">
-                  <input
-                    id="eventType"
-                    type="radio"
-                    value="acmEvent"
-                    name="eventType"
-                    disabled={operation === "view"}
-                    className="checked:appearance-none focus:opacity-100 focus:ring-2 focus:rounded-full focus:ring-offset-2 focus:ring-acm-blue focus:outline-none flex rounded-full absolute cursor-pointer w-full h-full"
-                    onChange={handleChange}
-                  />
-                  <div className="border-4 border-acm-blue rounded-full w-full h-full"></div>
-                </div>
-                <label
-                  htmlFor="acmEvent"
-                  className="font-lexend text-acm-black text-lg font-light ml-3 mt-1 mb-1"
-                >
-                  acm event
-                </label>
-              </div>
-              <div className="ml-3 flex items-center">
-                <div className="dark:bg-acm-white rounded-full w-3 h-3 flex flex-shrink-1 justify-center items-center relative">
-                  <input
-                    id="eventType"
-                    type="radio"
-                    value="fundraiser"
-                    name="eventType"
-                    disabled={operation === "view"}
-                    className="checked:appearance-none focus:opacity-100 focus:ring-2 focus:rounded-full focus:ring-offset-2 focus:ring-acm-orange focus:outline-none flex rounded-full absolute cursor-pointer w-full h-full"
-                    onChange={handleChange}
-                  />
-                  <div className="border-4 border-acm-orange rounded-full w-full h-full"></div>
-                </div>
-                <label
-                  htmlFor="fundraiser"
-                  className="font-lexend text-acm-black text-lg font-light ml-3 mt-1 mb-1"
-                >
-                  fundraiser
-                </label>
-              </div>
-
+                  <Dropdown.Menu className="">
+                    <Dropdown.Item
+                      onClick={() => {
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          eventType: "general",
+                        }));
+                      }}
+                    >
+                      general meeting
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          eventType: "social",
+                        }));
+                      }}
+                    >
+                      social
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          eventType: "workshop",
+                        }));
+                      }}
+                    >
+                      workshop
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          eventType: "project",
+                        }));
+                      }}
+                    >
+                      project
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          eventType: "acm event",
+                        }));
+                      }}
+                    >
+                      acm event
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          eventType: "fundraiser",
+                        }));
+                      }}
+                    >
+                      fundraiser
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
               <label
                 htmlFor="eventDate"
                 className="font-lexend text-acm-black text-lg font-medium m-1"
               >
                 event date
               </label>
-              <input
-                name="eventDate"
-                type="eventDate"
-                id="eventDate"
-                placeholder=""
-                value={formData.eventDate}
-                disabled={operation === "view"}
-                className="m-1 w-11/12 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
-                onChange={handleChange}
-              />
-              <label
-                htmlFor="eventDay"
-                className="font-lexend text-acm-black text-lg font-medium m-1"
-              >
-                event day
-              </label>
-              <input
-                name="eventDay"
-                type="day"
-                id="eventDay"
-                value={formData.eventDay}
-                disabled={operation === "view"}
-                className="m-1 w-11/12 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
-                placeholder=""
-                onChange={handleChange}
-              />
+              <div className="flex">
+                <input
+                  name="eventYear"
+                  id="eventYear"
+                  value={formData.eventYear}
+                  placeholder={formData.eventYear}
+                  disabled={operation === "view"}
+                  maxLength={4}
+                  className="m-1 w-1/6 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                  onChange={handleChange}
+                />
+
+                <input
+                  name="eventMonth"
+                  type="eventMonth"
+                  id="eventMonth"
+                  value={formData.eventMonth}
+                  placeholder={formData.eventMonth}
+                  disabled={operation === "view"}
+                  maxLength={2}
+                  className="m-1 w-1/6 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                  onChange={handleChange}
+                />
+
+                <input
+                  name="eventDay"
+                  type="eventDay"
+                  id="eventDay"
+                  value={formData.eventDay}
+                  placeholder={formData.eventDay}
+                  disabled={operation === "view"}
+                  maxLength={2}
+                  className="m-1 w-1/6 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                  onChange={handleChange}
+                />
+                <input
+                  name="eventWeekDay"
+                  type="eventWeekDay"
+                  id="eventWeekDay"
+                  value={formData.eventWeekDay}
+                  disabled={true}
+                  className="m-1 w-1/6 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                  placeholder=""
+                  onChange={handleChange}
+                />
+              </div>
+
               <label
                 htmlFor="eventTime"
                 className="font-lexend text-acm-black text-lg font-medium m-1"
               >
                 event time
               </label>
-              <input
-                name="eventTime"
-                type="eventTime"
-                id="eventTime"
-                value={formData.eventTime}
-                disabled={operation === "view"}
-                className="m-1 w-11/12 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
-                placeholder=""
-                onChange={handleChange}
-              />
+              <div className="flex">
+                <input
+                  name="eventHour"
+                  type="eventHour"
+                  id="eventHour"
+                  value={formData.eventHour}
+                  disabled={operation === "view"}
+                  className="m-1 w-1/6 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                  placeholder=""
+                  onChange={handleChange}
+                />
+                <input
+                  name="eventMinute"
+                  type="eventMinute"
+                  id="eventMinute"
+                  value={formData.eventMinute}
+                  disabled={operation === "view"}
+                  className="m-1 w-1/6 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                  placeholder=""
+                  onChange={handleChange}
+                />
+                {operation === "view" ? (
+                  <p className="m-1 w-1/6 bg-[#DDDDDD] rounded-lg font-lexend text-acm-black text-lg font-light px-2 pt-0 pb-0 ">
+                    {formData.eventAP}
+                  </p>
+                ) : (
+                  <Dropdown className="">
+                    <Dropdown.Toggle
+                      id="eventAP"
+                      className="m-1 min:w-1/6 bg-white rounded-lg font-lexend !text-acm-black text-lg font-light px-2 pt-1 pb-1 ring-0 outline-0 border-0"
+                    >
+                      {formData.eventAP}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className="">
+                      <Dropdown.Item
+                        onClick={() => {
+                          setFormData((prevData) => ({
+                            ...prevData,
+                            eventAP: "AM",
+                          }));
+                        }}
+                      >
+                        AM
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => {
+                          setFormData((prevData) => ({
+                            ...prevData,
+                            eventAP: "PM",
+                          }));
+                        }}
+                      >
+                        PM
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
               <label
                 htmlFor="eventLocation"
                 className="font-lexend text-acm-black text-lg font-medium m-1"
@@ -269,6 +405,22 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                 placeholder=""
                 onChange={handleChange}
               />
+              <label
+                htmlFor="eventDetails"
+                className="font-lexend text-acm-black text-lg font-medium m-1"
+              >
+                event details
+              </label>
+              <textarea
+                name="eventDetails"
+                type="text"
+                id="eventDetails"
+                value={formData.eventDetails}
+                disabled={operation === "view"}
+                className="m-1 w-11/12 block rounded-lg font-lexend text-acm-black text-lg font-light pl-2 pt-0 pb-0"
+                placeholder=""
+                onChange={handleChange}
+              />
               {operation === "add" && (
                 <div className="w-full flex justify-end">
                   <button className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full ">
@@ -280,10 +432,6 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                 <div className="w-full flex justify-end">
                   <button
                     onClick={() => {
-                      setFormData({
-                        ...announcement.data,
-                        eventName: announcement.eventName,
-                      });
                       setOperation("edit");
                     }}
                     className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full"
@@ -294,13 +442,20 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
-                  <button className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full ">
+                  <button className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
                     save
                   </button>
                 </div>
               )}
             </div>
           </form>
+        </div>
+        <div
+          className={`${
+            !showSnackBar ? "hidden" : "visible"
+          } z-50 bg-black/60 text-white text-center p-2 fixed bottom-[30px] left-1/2 -translate-x-1/2`}
+        >
+          {message}
         </div>
       </div>
     </>
