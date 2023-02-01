@@ -55,7 +55,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     }, 3000);
   };
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     if (
       formData.eventName === "" ||
