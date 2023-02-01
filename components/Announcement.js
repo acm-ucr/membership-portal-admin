@@ -8,6 +8,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [operation, setOperation] = useState(ops);
   const [formData, setFormData] = useState({
+    eventid: announcement ? announcement.id : "",
     eventName: announcement ? announcement.title : "Event Name",
     eventType: announcement ? announcement.type : "",
     eventWeekDay: announcement
@@ -22,22 +23,23 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     eventDay: announcement
       ? new Date(announcement.time.seconds * 1000)
           .toLocaleDateString()
-          .substring(3, 5)
+          .split("/")[1]
       : "1",
     eventHour: announcement
       ? new Date(announcement.time.seconds * 1000)
           .toLocaleTimeString()
-          .substring(0, 2)
+          .split(":")[0]
       : "12",
     eventMinute: announcement
       ? new Date(announcement.time.seconds * 1000)
           .toLocaleTimeString()
-          .substring(3, 5)
+          .split(":")[1]
       : "00",
     eventAP: announcement
       ? new Date(announcement.time.seconds * 1000)
           .toLocaleTimeString()
-          .substring(9, 11)
+          .split(":")[2]
+          .substring(3, 5)
       : "PM",
     eventTime: announcement
       ? new Date(announcement.time.seconds * 1000).toLocaleTimeString()
@@ -53,7 +55,6 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     }, 3000);
   };
   const handleSubmit = (event) => {
-    console.log("submit");
     event.preventDefault();
 
     if (
@@ -80,22 +81,47 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       snackBar();
       return;
     }
+    if (
+      parseInt(formData.eventHour) > 12 ||
+      parseInt(formData.eventHour) < 1 ||
+      parseInt(formData.eventMinute) > 59 ||
+      parseInt(formData.eventMinute) < 0
+    ) {
+      setMessage("Invalid Time");
+      snackBar();
+      return;
+    }
+    if (formData.eventHour.length < 2) {
+      formData.eventHour = "0" + formData.eventHour;
+    }
+    if (formData.eventMinute.length < 2) {
+      formData.eventMinute = "0" + formData.eventMinute;
+    }
     const result = {
+      id: formData.eventid,
       details: formData.eventDetails,
       location: formData.eventLocation,
       title: formData.eventName,
       time:
-        new Date(
-          formData.eventYear +
-            "-" +
-            formData.eventMonth +
-            "-" +
-            formData.eventDay
-        ).getTime() / 1000,
+        formData.eventAP == "PM"
+          ? new Date(
+              formData.eventYear,
+              formData.eventMonth - 1,
+              formData.eventDay,
+              parseInt(formData.eventHour) + 12,
+              formData.eventMinute,
+              "00"
+            ).getTime() / 1000
+          : new Date(
+              formData.eventYear,
+              formData.eventMonth - 1,
+              formData.eventDay,
+              formData.eventHour,
+              formData.eventMinute,
+              "00"
+            ).getTime() / 1000,
       type: formData.eventType,
     };
-    console.log(result);
-    setOperation("view");
     if (ops == "add") {
       axios
         .post("/api/addAnnouncement", { result })
@@ -105,14 +131,20 @@ const Announcement = ({ announcement, setVisible, ops }) => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      axios
+        .post("/api/updateAnnouncment", { result })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    console.log(formData);
+    setOperation("view");
   };
 
   const handleChange = (event) => {
-    if (event.target.name == "eventType") {
-      console.log(event.target.value);
-    }
     setFormData((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,

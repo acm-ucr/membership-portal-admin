@@ -33,7 +33,6 @@ const Announcements = () => {
       <Row className="flex justify-start items-center">
         {announcements.map((announcement, index) => (
           <Col
-            md={2}
             key={index}
             onClick={() => {
               setData(announcement.data);

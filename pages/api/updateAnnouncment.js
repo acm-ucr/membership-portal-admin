@@ -1,9 +1,9 @@
-import { addDoc, Timestamp, collection } from "firebase/firestore";
+import { updateDoc, Timestamp, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-export default async function addAnnouncement(req, res) {
+export default async function updateAnnouncement(req, res) {
   try {
-    await addDoc(collection(db, "announcement"), {
+    await updateDoc(doc(db, "announcement", req.body.result.id), {
       details: req.body.result.details,
       location: req.body.result.location,
       title: req.body.result.title,

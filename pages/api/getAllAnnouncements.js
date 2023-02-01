@@ -8,7 +8,7 @@ export default async function get5Announcements(req, res) {
 
   querySnapshot.forEach((doc) => {
     announcements.push({
-      data: doc.data(),
+      data: { ...doc.data(), id: doc.id },
     });
   });
 
