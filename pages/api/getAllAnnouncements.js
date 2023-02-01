@@ -4,12 +4,11 @@ import { db } from "../../firebase";
 export default async function get5Announcements(req, res) {
   const announcements = [];
 
-  const querySnapshot = await getDocs(collection(db, "announcements"));
+  const querySnapshot = await getDocs(collection(db, "announcement"));
 
   querySnapshot.forEach((doc) => {
     announcements.push({
-      title: doc.id,
-      data: doc.data(),
+      data: { ...doc.data(), id: doc.id },
     });
   });
 
