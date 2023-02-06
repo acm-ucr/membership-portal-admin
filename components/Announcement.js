@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import {AiFillDelete} from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 
