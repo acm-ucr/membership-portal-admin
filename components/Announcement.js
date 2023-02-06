@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import {AiFillDelete} from "react-icons/ai";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 
@@ -193,7 +194,6 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                   edit announcement
                 </p>
               )}
-
               <button>
                 <FaTimes
                   onClick={() => {
@@ -474,7 +474,15 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
-                  <button className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
+                  <button>
+                    <AiFillDelete
+                      onClick={() => {
+                        setVisible(false);
+                      }}
+                      className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
+                    />
+                  </button>
+                  <button className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
                     save
                   </button>
                 </div>
