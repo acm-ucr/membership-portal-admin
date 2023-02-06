@@ -471,9 +471,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                   >
                     edit
                   </button>
-                  
                 </div>
-
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
@@ -489,7 +487,6 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                     save
                   </button>
                 </div>
-              
               )}
             </div>
           </form>
