@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Lexend, Athiti } from "@next/font/google";
+import Layout from "../components/Layout";
 
 const lexend = Lexend({ subsets: ["latin"], variable: "--font-lexend" });
 const athiti = Athiti({
@@ -13,8 +14,8 @@ const athiti = Athiti({
 
 export default function App({ Component, pageProps }) {
   return (
-    <main className={`${lexend.variable} ${athiti.variable}`}>
+    <Layout className={`${lexend.variable} ${athiti.variable}`}>
       <Component {...pageProps} />
-    </main>
+    </Layout>
   );
 }
