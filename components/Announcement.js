@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 
@@ -470,7 +471,9 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                   >
                     edit
                   </button>
+                  
                 </div>
+
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
@@ -486,6 +489,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                     save
                   </button>
                 </div>
+              
               )}
             </div>
           </form>
