@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 
@@ -470,14 +471,25 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                   >
                     edit
                   </button>
+                  
                 </div>
+
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
-                  <button className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
+                  <button>
+                    <AiFillDelete
+                      onClick={() => {
+                        setVisible(false); //for vincent: I put this operation in for now (it exits the announcement window) you can include the operation here when you make it
+                      }}
+                      className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
+                    />
+                  </button>
+                  <button className="bg-acm-black text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-5 rounded-full">
                     save
                   </button>
                 </div>
+              
               )}
             </div>
           </form>
