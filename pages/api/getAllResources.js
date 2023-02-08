@@ -9,10 +9,9 @@ export default async function getAllResources(req, res) {
 
   querySnapshot.forEach((doc) => {
     resources.push({
-      title: doc.id,
+      id: doc.id,
       data: doc.data(),
     });
   });
-
   res.status(200).json(resources);
 }
