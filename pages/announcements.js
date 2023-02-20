@@ -5,7 +5,7 @@ import Announcements from "../components/Announcements";
 
 const announcements = () => {
   return (
-    <div className="flex justify-center items-center flex-col">
+    <div className="flex justify-center items-center flex-col mt-24">
       <Header title="Announcements" color="bg-acm-blue" />
       <AddAnnouncements />
       <Announcements />
