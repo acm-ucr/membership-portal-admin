@@ -23,24 +23,24 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       : "1",
     eventDay: announcement
       ? new Date(announcement.time.seconds * 1000)
-        .toLocaleDateString()
-        .split("/")[1]
+          .toLocaleDateString()
+          .split("/")[1]
       : "1",
     eventHour: announcement
       ? new Date(announcement.time.seconds * 1000)
-        .toLocaleTimeString()
-        .split(":")[0]
+          .toLocaleTimeString()
+          .split(":")[0]
       : "12",
     eventMinute: announcement
       ? new Date(announcement.time.seconds * 1000)
-        .toLocaleTimeString()
-        .split(":")[1]
+          .toLocaleTimeString()
+          .split(":")[1]
       : "00",
     eventAP: announcement
       ? new Date(announcement.time.seconds * 1000)
-        .toLocaleTimeString()
-        .split(":")[2]
-        .substring(3, 5)
+          .toLocaleTimeString()
+          .split(":")[2]
+          .substring(3, 5)
       : "PM",
     eventTime: announcement
       ? new Date(announcement.time.seconds * 1000).toLocaleTimeString()
@@ -56,7 +56,6 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     }, 3000);
   };
   const handleSubmit = (ops) => {
-
     if (
       formData.eventName === "" ||
       formData.eventAP === "" ||
@@ -105,21 +104,21 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       time:
         formData.eventAP == "PM"
           ? new Date(
-            formData.eventYear,
-            formData.eventMonth - 1,
-            formData.eventDay,
-            parseInt(formData.eventHour) + 12,
-            formData.eventMinute,
-            "00"
-          ).getTime() / 1000
+              formData.eventYear,
+              formData.eventMonth - 1,
+              formData.eventDay,
+              parseInt(formData.eventHour) + 12,
+              formData.eventMinute,
+              "00"
+            ).getTime() / 1000
           : new Date(
-            formData.eventYear,
-            formData.eventMonth - 1,
-            formData.eventDay,
-            formData.eventHour,
-            formData.eventMinute,
-            "00"
-          ).getTime() / 1000,
+              formData.eventYear,
+              formData.eventMonth - 1,
+              formData.eventDay,
+              formData.eventHour,
+              formData.eventMinute,
+              "00"
+            ).getTime() / 1000,
       type: formData.eventType,
     };
     if (ops == "add") {
@@ -131,15 +130,15 @@ const Announcement = ({ announcement, setVisible, ops }) => {
         .catch((error) => {
           console.log(error);
         });
-      } else if (ops == "delete") {
-        axios
-          .post("/api/deleteAnnouncement",  result)
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    } else if (ops == "delete") {
+      axios
+        .post("/api/deleteAnnouncement", result)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       axios
         .post("/api/updateAnnouncment", result)
@@ -178,10 +177,10 @@ const Announcement = ({ announcement, setVisible, ops }) => {
         ...prevData,
         eventWeekDay: new Date(
           formData.eventYear +
-          "-" +
-          formData.eventMonth +
-          "-" +
-          formData.eventDay
+            "-" +
+            formData.eventMonth +
+            "-" +
+            formData.eventDay
         )
           .toString()
           .substring(0, 3),
@@ -493,17 +492,20 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
-                    <AiFillDelete
-                      onClick={() => {
-                        setOperation("delete");
-                        setVisible(false);
-                        console.log("formData ",formData);
-                        handleSubmit("delete")
-                        // deleteAnnouncement(formData);
-                      }}
-                      className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
-                    />
-                  <button onClick = {() => handleSubmit("edit")} className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
+                  <AiFillDelete
+                    onClick={() => {
+                      setOperation("delete");
+                      setVisible(false);
+                      console.log("formData ", formData);
+                      handleSubmit("delete");
+                      // deleteAnnouncement(formData);
+                    }}
+                    className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
+                  />
+                  <button
+                    onClick={() => handleSubmit("edit")}
+                    className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full"
+                  >
                     save
                   </button>
                 </div>
@@ -512,8 +514,9 @@ const Announcement = ({ announcement, setVisible, ops }) => {
           </div>
         </div>
         <div
-          className={`${!showSnackBar ? "hidden" : "visible"
-            } z-50 bg-black/60 text-white text-center p-2 fixed bottom-[30px] left-1/2 -translate-x-1/2`}
+          className={`${
+            !showSnackBar ? "hidden" : "visible"
+          } z-50 bg-black/60 text-white text-center p-2 fixed bottom-[30px] left-1/2 -translate-x-1/2`}
         >
           {message}
         </div>
