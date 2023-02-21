@@ -23,24 +23,24 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       : "1",
     eventDay: announcement
       ? new Date(announcement.time.seconds * 1000)
-          .toLocaleDateString()
-          .split("/")[1]
+        .toLocaleDateString()
+        .split("/")[1]
       : "1",
     eventHour: announcement
       ? new Date(announcement.time.seconds * 1000)
-          .toLocaleTimeString()
-          .split(":")[0]
+        .toLocaleTimeString()
+        .split(":")[0]
       : "12",
     eventMinute: announcement
       ? new Date(announcement.time.seconds * 1000)
-          .toLocaleTimeString()
-          .split(":")[1]
+        .toLocaleTimeString()
+        .split(":")[1]
       : "00",
     eventAP: announcement
       ? new Date(announcement.time.seconds * 1000)
-          .toLocaleTimeString()
-          .split(":")[2]
-          .substring(3, 5)
+        .toLocaleTimeString()
+        .split(":")[2]
+        .substring(3, 5)
       : "PM",
     eventTime: announcement
       ? new Date(announcement.time.seconds * 1000).toLocaleTimeString()
@@ -55,8 +55,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       setMessage("");
     }, 3000);
   };
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = (ops) => {
 
     if (
       formData.eventName === "" ||
@@ -106,35 +105,44 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       time:
         formData.eventAP == "PM"
           ? new Date(
-              formData.eventYear,
-              formData.eventMonth - 1,
-              formData.eventDay,
-              parseInt(formData.eventHour) + 12,
-              formData.eventMinute,
-              "00"
-            ).getTime() / 1000
+            formData.eventYear,
+            formData.eventMonth - 1,
+            formData.eventDay,
+            parseInt(formData.eventHour) + 12,
+            formData.eventMinute,
+            "00"
+          ).getTime() / 1000
           : new Date(
-              formData.eventYear,
-              formData.eventMonth - 1,
-              formData.eventDay,
-              formData.eventHour,
-              formData.eventMinute,
-              "00"
-            ).getTime() / 1000,
+            formData.eventYear,
+            formData.eventMonth - 1,
+            formData.eventDay,
+            formData.eventHour,
+            formData.eventMinute,
+            "00"
+          ).getTime() / 1000,
       type: formData.eventType,
     };
     if (ops == "add") {
       axios
-        .post("/api/addAnnouncement", { result })
+        .post("/api/addAnnouncement", result)
         .then((response) => {
           console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
+      } else if (ops == "delete") {
+        axios
+          .post("/api/deleteAnnouncement",  result)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     } else {
       axios
-        .post("/api/updateAnnouncment", { result })
+        .post("/api/updateAnnouncment", result)
         .then((response) => {
           console.log(response);
         })
@@ -144,6 +152,17 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     }
     setOperation("view");
   };
+
+  // const deleteAnnouncement = (event) => {
+  //   axios
+  //     .post("/api/deleteAnnouncement", { announcement })
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   const handleChange = (event) => {
     setFormData((prevData) => ({
@@ -159,10 +178,10 @@ const Announcement = ({ announcement, setVisible, ops }) => {
         ...prevData,
         eventWeekDay: new Date(
           formData.eventYear +
-            "-" +
-            formData.eventMonth +
-            "-" +
-            formData.eventDay
+          "-" +
+          formData.eventMonth +
+          "-" +
+          formData.eventDay
         )
           .toString()
           .substring(0, 3),
@@ -174,7 +193,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       <div className="fixed inset-0 bg-acm-white opacity-50 w-full h-full"></div>
       <div className="absolute inset-x-0 top-20 w-full">
         <div className="flex justify-center isolation-auto">
-          <form
+          <div
             className="bg-acm-lightgray rounded-3xl w-1/2 flex flex-col"
             onSubmit={handleSubmit}
           >
@@ -474,26 +493,27 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
-                  <button>
                     <AiFillDelete
                       onClick={() => {
+                        setOperation("delete");
                         setVisible(false);
+                        console.log("formData ",formData);
+                        handleSubmit("delete")
+                        // deleteAnnouncement(formData);
                       }}
                       className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
                     />
-                  </button>
-                  <button className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
+                  <button onClick = {() => handleSubmit("edit")} className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
                     save
                   </button>
                 </div>
               )}
             </div>
-          </form>
+          </div>
         </div>
         <div
-          className={`${
-            !showSnackBar ? "hidden" : "visible"
-          } z-50 bg-black/60 text-white text-center p-2 fixed bottom-[30px] left-1/2 -translate-x-1/2`}
+          className={`${!showSnackBar ? "hidden" : "visible"
+            } z-50 bg-black/60 text-white text-center p-2 fixed bottom-[30px] left-1/2 -translate-x-1/2`}
         >
           {message}
         </div>
