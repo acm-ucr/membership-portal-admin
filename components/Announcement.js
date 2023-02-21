@@ -55,9 +55,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       setMessage("");
     }, 3000);
   };
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-
+  const handleSubmit = (ops) => {
     if (
       formData.eventName === "" ||
       formData.eventAP === "" ||
@@ -125,7 +123,16 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     };
     if (ops == "add") {
       axios
-        .post("/api/addAnnouncement", { result })
+        .post("/api/addAnnouncement", result)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (ops == "delete") {
+      axios
+        .post("/api/deleteAnnouncement", result)
         .then((response) => {
           console.log(response);
         })
@@ -134,7 +141,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
         });
     } else {
       axios
-        .post("/api/updateAnnouncment", { result })
+        .post("/api/updateAnnouncment", result)
         .then((response) => {
           console.log(response);
         })
@@ -144,6 +151,17 @@ const Announcement = ({ announcement, setVisible, ops }) => {
     }
     setOperation("view");
   };
+
+  // const deleteAnnouncement = (event) => {
+  //   axios
+  //     .post("/api/deleteAnnouncement", { announcement })
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   const handleChange = (event) => {
     setFormData((prevData) => ({
@@ -174,7 +192,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
       <div className="fixed inset-0 bg-acm-white opacity-50 w-full h-full"></div>
       <div className="absolute inset-x-0 top-20 w-full">
         <div className="flex justify-center isolation-auto">
-          <form
+          <div
             className="bg-acm-lightgray rounded-3xl w-1/2 flex flex-col"
             onSubmit={handleSubmit}
           >
@@ -474,21 +492,26 @@ const Announcement = ({ announcement, setVisible, ops }) => {
               )}
               {operation === "edit" && (
                 <div className="w-full flex justify-end">
-                  <button>
-                    <AiFillDelete
-                      onClick={() => {
-                        setVisible(false);
-                      }}
-                      className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
-                    />
-                  </button>
-                  <button className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full">
+                  <AiFillDelete
+                    onClick={() => {
+                      setOperation("delete");
+                      setVisible(false);
+                      console.log("formData ", formData);
+                      handleSubmit("delete");
+                      // deleteAnnouncement(formData);
+                    }}
+                    className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "
+                  />
+                  <button
+                    onClick={() => handleSubmit("edit")}
+                    className="bg-acm-red text-acm-white text-xl font-semibold font-lexend px-12 py-1 mt-3 rounded-full"
+                  >
                     save
                   </button>
                 </div>
               )}
             </div>
-          </form>
+          </div>
         </div>
         <div
           className={`${
