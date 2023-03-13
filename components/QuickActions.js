@@ -13,13 +13,6 @@ const actions = [
     size: 2,
   },
   {
-    title: "Announcements",
-    link: "/announcements",
-    color: "bg-acm-blue",
-    icon: <FaExternalLinkAlt className="ml-3" />,
-    size: 3,
-  },
-  {
     title: "Resources",
     link: "/resources",
     color: "bg-acm-blue",
