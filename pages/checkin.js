@@ -4,7 +4,7 @@ import Checkin from "../components/Checkin";
 
 const checkin = () => {
   return (
-    <div className="flex justify-center items-center flex-col w-full">
+    <div className="flex justify-center items-center flex-col w-full mt-24">
       <Header title="Checkin" color="bg-acm-blue" />
       <Checkin />
     </div>

@@ -3,7 +3,7 @@ import QuickActions from "../components/QuickActions";
 
 const Home = () => {
   return (
-    <div>
+    <div className="mt-24">
       <QuickActions />
     </div>
   );
