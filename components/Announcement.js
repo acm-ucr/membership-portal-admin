@@ -4,7 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 
-const Announcement = ({ announcement, setVisible, ops }) => {
+const Announcement = ({ announcement, setVisible, ops, handleHover }) => {
   const [message, setMessage] = useState("");
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [operation, setOperation] = useState(ops);
@@ -216,6 +216,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                 <FaTimes
                   onClick={() => {
                     setVisible(false);
+                    handleHover(false);
                   }}
                   className="text-3xl text-acm-black m-4 hover:text-acm-red hover:cursor-pointer"
                 />
@@ -498,6 +499,7 @@ const Announcement = ({ announcement, setVisible, ops }) => {
                       setVisible(false);
                       console.log("formData ", formData);
                       handleSubmit("delete");
+                      handleClick(click);
                       // deleteAnnouncement(formData);
                     }}
                     className="text-4xl text-acm-black hover:text-acm-red hover:cursor-pointer "

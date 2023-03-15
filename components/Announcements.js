@@ -8,6 +8,8 @@ const Announcements = () => {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState({});
   const [operation, setOperation] = useState("view");
+  const [hoverState, handleHover] = useState(false);
+
 
   useEffect(() => {
     axios
@@ -28,6 +30,7 @@ const Announcements = () => {
           ops={"view"}
           announcement={data}
           setVisible={setVisible}
+          handleHover = {handleHover}
         />
       )}
       <Row className="flex justify-start items-center">
@@ -38,10 +41,11 @@ const Announcements = () => {
               setData(announcement.data);
               setVisible(true);
               setOperation(operation);
+              handleHover(!hoverState);
             }}
-            className={`bg-acm-blue m-2 hover:cursor-pointer whitespace-nowrap no-underline text-white font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:scale-105`}
+            id = "announcement" className={hoverState ? `bg-acm-blue m-2 hover:cursor-pointer whitespace-nowrap no-underline text-white font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:none` : `bg-acm-blue m-2 hover:cursor-pointer whitespace-nowrap no-underline text-white font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:scale-105`}
           >
-            <p className="m-0">{announcement.data.title}</p>
+            <p className="m-0" >{announcement.data.title}</p>
             <p className="text-lg m-0">
               {new Date(
                 announcement.data.time.seconds * 1000
