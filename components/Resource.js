@@ -7,7 +7,7 @@ const getTimeString = (date) => {
   if (dateList[0].length != 2) dateList[0] = "0" + dateList[0];
   return dateList[2] + "-" + dateList[0] + "-" + dateList[1];
 };
-const Resource = ({ ops, resource, setVisible }) => {
+const Resource = ({ ops, resource, setVisible, handleHover }) => {
   const [message, setMessage] = useState("");
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [operation, setOperation] = useState(ops);
@@ -86,7 +86,10 @@ const Resource = ({ ops, resource, setVisible }) => {
               </p>
               <FaTimes
                 className="text-3xl hover:text-acm-red hover:cursor-pointer"
-                onClick={() => setVisible(false)}
+                onClick={() => {
+                  setVisible(false);
+                  handleHover(false);
+                }}
               />
             </div>
             <div>
