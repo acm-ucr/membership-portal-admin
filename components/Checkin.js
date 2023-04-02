@@ -60,7 +60,7 @@ const Checkin = () => {
         <button
           onClick={() => setPoints(5)}
           className={`${
-            points === 5 ? "bg-black text-white" : "bg-white text-black"
+            points === 5 ? "bg-white text-black" : "bg-black text-white"
           } px-3 py-2 rounded`}
         >
           05
@@ -68,7 +68,7 @@ const Checkin = () => {
         <button
           onClick={() => setPoints(10)}
           className={`${
-            points === 10 ? "bg-black text-white" : "bg-white text-black"
+            points === 10 ? "bg-white text-black" : "bg-black text-white"
           } px-3 py-2 rounded`}
         >
           10
@@ -76,7 +76,7 @@ const Checkin = () => {
         <button
           onClick={() => setPoints(15)}
           className={`${
-            points === 15 ? "bg-black text-white" : "bg-white text-black"
+            points === 15 ? "bg-white text-black" : "bg-black text-white"
           } px-3 py-2 rounded`}
         >
           15
@@ -84,7 +84,7 @@ const Checkin = () => {
         <button
           onClick={() => setPoints(20)}
           className={`${
-            points === 20 ? "bg-black text-white" : "bg-white text-black"
+            points === 20 ? "bg-white text-black" : "bg-black text-white"
           } px-3 py-2 rounded`}
         >
           20
@@ -93,7 +93,7 @@ const Checkin = () => {
       <div className="w-1/2 flex justify-center items-center flex-col">
         <button
           onClick={addPoints}
-          className="px-3 py-2 my-2 rounded border-black border-4 text-2xl hover:bg-black hover:text-white"
+          className="px-3 py-2 my-2 rounded-xl text-white bg-black border-2 text-2xl border-white hover:!bg-white hover:!text-black"
         >
           Add Points
         </button>
