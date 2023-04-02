@@ -4,7 +4,7 @@ import { db } from "../../firebase";
 export default async function addPoints(req, res) {
   try {
     await updateDoc(doc(db, "users", req.body.result), {
-      points: increment(10),
+      points: increment(req.body.points),
     });
     res.status(200).json({});
   } catch {

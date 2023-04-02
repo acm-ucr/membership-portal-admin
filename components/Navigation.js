@@ -13,17 +13,21 @@ const Navigation = () => {
       fixed="top"
     >
       <Navbar.Brand className="flex flex-row items-center p-0 m-0">
-        <Link href="/">
-          <Image
-            src="/acm-ucr-logo.png"
-            alt="ACM at UCR"
-            width={80}
-            height={80}
-          />
+        <Link href="/" className="no-underline">
+          <div className="flex items-center justify-center">
+            <Image
+              src="/acm-ucr-logo.png"
+              alt="ACM at UCR"
+              width={50}
+              height={50}
+            />
+            <div className="hidden lg:block">
+              <p className="m-0 font-lexend font-medium text-2xl cursor-pointer text-black">
+                Admin Portal
+              </p>
+            </div>
+          </div>
         </Link>
-        <div className="hidden lg:block">
-          <p className="m-0 font-lexend font-medium text-2xl">Admin Portal</p>
-        </div>
       </Navbar.Brand>
 
       <>
@@ -32,10 +36,17 @@ const Navigation = () => {
           id="navbar-nav"
           className="flex justify-center md:justify-end items-center"
         >
-          <Nav className="text-2xl flex justify-center items-center">
-            <Link href="/" className="no-underline">
+          <Nav className="text-2xl mx-2 flex justify-center items-center">
+            <Link href="/checkin" className="no-underline">
               <p className=" mb-0 text-acm-black font-medium hover:!text-acm-blue">
-                Quick Actions
+                Checkin
+              </p>
+            </Link>
+          </Nav>
+          <Nav className="text-2xl mx-2 flex justify-center items-center">
+            <Link href="/resources" className="no-underline">
+              <p className=" mb-0 text-acm-black font-medium hover:!text-acm-blue">
+                Resources
               </p>
             </Link>
           </Nav>
