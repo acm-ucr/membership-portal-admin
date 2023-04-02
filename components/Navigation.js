@@ -8,7 +8,7 @@ const Navigation = () => {
   return (
     <Navbar
       collapseOnSelect
-      className="py-0 font-lexend w-full px-3 m-0 min-h-[10vh] bg-white flex justify-between items-center"
+      className="py-0 font-lexend w-full px-3 m-0 min-h-[10vh] bg-acm-black flex justify-between items-center"
       expand="md"
       fixed="top"
     >
@@ -22,7 +22,7 @@ const Navigation = () => {
               height={50}
             />
             <div className="hidden lg:block">
-              <p className="m-0 font-lexend font-medium text-2xl cursor-pointer text-black">
+              <p className="m-0 font-lexend font-medium text-2xl cursor-pointer text-white">
                 Admin Portal
               </p>
             </div>
@@ -38,14 +38,14 @@ const Navigation = () => {
         >
           <Nav className="text-2xl mx-2 flex justify-center items-center">
             <Link href="/checkin" className="no-underline">
-              <p className=" mb-0 text-acm-black font-medium hover:!text-acm-blue">
+              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
                 Checkin
               </p>
             </Link>
           </Nav>
           <Nav className="text-2xl mx-2 flex justify-center items-center">
             <Link href="/resources" className="no-underline">
-              <p className=" mb-0 text-acm-black font-medium hover:!text-acm-blue">
+              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
                 Resources
               </p>
             </Link>

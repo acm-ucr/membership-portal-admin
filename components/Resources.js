@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Resource from "./Resource";
 import { FaPlus } from "react-icons/fa";
+import ResourceTile from "./ResourceTile";
 
 const Resources = () => {
   const [resources, setResources] = useState([]);
@@ -24,19 +25,24 @@ const Resources = () => {
 
   return (
     <div className="w-11/12">
-      <button
-        onClick={() => {
-          setVisible(true);
-          setOperation("add");
-          setData(null);
-          handleHover(handleHover);
-        }}
-        className="flex justify-center items-center"
-      >
-        Add Resource <FaPlus />
-      </button>
+      <div className="w-full flex justify-end mt-2">
+        <button
+          onClick={() => {
+            setVisible(true);
+            setOperation("add");
+            setData(null);
+            handleHover(handleHover);
+          }}
+          className="flex justify-center items-center text-black bg-white rounded px-3 py-2"
+        >
+          <FaPlus className="mr-2" />
+          Add Resource
+        </button>
+      </div>
       {visible && (
         <Resource
+          resources={resources}
+          setResources={setResources}
           ops={operation}
           resource={data}
           setVisible={setVisible}
@@ -48,6 +54,7 @@ const Resources = () => {
         {resources.map((resource, index) => (
           <Col
             key={index}
+            xl={2}
             onClick={() => {
               setData(resource);
               setVisible(true);
@@ -56,14 +63,16 @@ const Resources = () => {
             }}
             className={
               hoverState
-                ? `bg-acm-blue m-2 hover:cursor-pointer whitespace-nowrap no-underline text-white font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:none`
-                : `bg-acm-blue m-2 hover:cursor-pointer whitespace-nowrap no-underline text-white font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:scale-105`
+                ? `bg-acm-white m-2 hover:cursor-pointer whitespace-nowrap no-underline text-black font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:none`
+                : `bg-acm-white m-2 hover:cursor-pointer whitespace-nowrap no-underline text-black font-lexend text-2xl px-6 py-2 rounded flex justify-center items-center flex-col text-center hover:scale-105`
             }
           >
-            <p className="m-0">{resource.data.title}</p>
-            <p className="text-lg m-0">
-              {new Date(resource.data.time.seconds * 1000).toLocaleDateString()}
-            </p>
+            <ResourceTile
+              title={resource.data.title}
+              date={new Date(
+                resource.data.time.seconds * 1000
+              ).toLocaleDateString()}
+            />
           </Col>
         ))}
       </Row>
