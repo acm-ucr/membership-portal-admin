@@ -14,7 +14,7 @@ const athiti = Athiti({
 
 export default function App({ Component, pageProps }) {
   return (
-    <Layout className={`${lexend.variable} ${athiti.variable}`}>
+    <Layout className={`${lexend.variable} ${athiti.variable} `}>
       <Component {...pageProps} />
     </Layout>
   );
