@@ -42,6 +42,11 @@ const Navigation = () => {
                 Resume
               </p>
             </Link>
+            <Link href="/lockers" className="no-underline">
+              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
+                Lockers
+              </p>
+            </Link>
           </Nav>
           <Nav className="text-2xl mx-2 flex justify-center items-center">
             <Link href="/checkin" className="no-underline">
