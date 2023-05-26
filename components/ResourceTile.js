@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFileAlt } from "react-icons/fa";
+import { FaFileAlt, FaYoutube, FaGithub } from "react-icons/fa";
 
 const ResourceTile = ({
   title,
