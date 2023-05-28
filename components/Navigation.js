@@ -37,6 +37,10 @@ const Navigation = () => {
           className="flex justify-center md:justify-end items-center"
         >
           <Nav className="text-2xl mx-2 flex justify-center items-center">
+            <Link href="/calendar" className="no-underline">
+              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
+                Calendar
+              </p>
             <Link href="/resumes" className="no-underline">
               <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
                 Resume
