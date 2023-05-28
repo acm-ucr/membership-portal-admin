@@ -41,6 +41,7 @@ const Navigation = () => {
               <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
                 Calendar
               </p>
+            </Link>
             <Link href="/resumes" className="no-underline">
               <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
                 Resume

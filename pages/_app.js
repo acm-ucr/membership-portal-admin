@@ -2,7 +2,7 @@
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Lexend, Athiti } from "@next/font/google";
+// import { Lexend, Athiti } from "@next/font/google";
 
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,12 +13,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import PortalContext from "../components/PortalContext";
 
-const lexend = Lexend({ subsets: ["latin"], variable: "--font-lexend" });
-const athiti = Athiti({
-  subsets: ["latin"],
-  variable: "--font-athiti",
-  weight: ["200", "300", "400", "500", "600", "700"],
-});
+// const lexend = Lexend({ subsets: ["latin"], variable: "--font-lexend" });
+// const athiti = Athiti({
+//   subsets: ["latin"],
+//   variable: "--font-athiti",
+//   weight: ["200", "300", "400", "500", "600", "700"],
+// });
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState(null);
