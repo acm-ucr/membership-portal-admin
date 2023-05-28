@@ -72,6 +72,9 @@ const Resources = () => {
               date={new Date(
                 resource.data.time.seconds * 1000
               ).toLocaleDateString()}
+              documentLink={resource.data.slides}
+              youtubeLink={resource.data.youtube}
+              githubLink={resource.data.github}
             />
           </Col>
         ))}
