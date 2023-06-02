@@ -36,48 +36,36 @@ const Navigation = () => {
           id="navbar-nav"
           className="flex justify-center md:justify-end items-center"
         >
-          <Nav className="text-2xl mx-2 flex justify-center items-center">
-            <Link href="/calendar" className="no-underline">
-              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
-                Calendar
-              </p>
-            </Link>
-          </Nav>
-          <Nav className="text-2xl mx-2 flex justify-center items-center">
-            <Link href="/resumes" className="no-underline">
-              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
-                Resume
-              </p>
-            </Link>
-          </Nav>
-          <Nav className="text-2xl mx-2 flex justify-center items-center">
-            <Link href="/lockers" className="no-underline">
-              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
-                Lockers
-              </p>
-            </Link>
-          </Nav>
-          <Nav className="text-2xl mx-2 flex justify-center items-center">
-            <Link href="/checkin" className="no-underline">
-              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
-                Checkin
-              </p>
-            </Link>
-          </Nav>
-          <Nav className="text-2xl mx-2 flex justify-center items-center">
-            <Link href="/resources" className="no-underline">
-              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
-                Resources
-              </p>
-            </Link>
-          </Nav>
-          <Nav className="text-2xl mx-2 flex justify-center items-center">
-            <Link href="/registration" className="no-underline">
-              <p className=" mb-0 text-acm-white font-medium hover:!text-acm-blue">
-                Registration
-              </p>
-            </Link>
-          </Nav>
+          <Nav.Link href="/calendar" className="no-underline">
+            <p className="text-2xl mx-2 flex justify-center items-center mb-0 text-acm-white font-medium hover:!text-acm-blue">
+              Calendar
+            </p>
+          </Nav.Link>
+          <Nav.Link href="/resumes" className="no-underline">
+            <p className="text-2xl mx-2 flex justify-center items-center mb-0 text-acm-white font-medium hover:!text-acm-blue">
+              Resume
+            </p>
+          </Nav.Link>
+          <Nav.Link href="/lockers" className="no-underline">
+            <p className="text-2xl mx-2 flex justify-center items-center mb-0 text-acm-white font-medium hover:!text-acm-blue">
+              Lockers
+            </p>
+          </Nav.Link>
+          <Nav.Link href="/checkin" className="no-underline">
+            <p className="text-2xl mx-2 flex justify-center items-center mb-0 text-acm-white font-medium hover:!text-acm-blue">
+              Checkin
+            </p>
+          </Nav.Link>
+          <Nav.Link href="/resources" className="no-underline">
+            <p className="text-2xl mx-2 flex justify-center items-center mb-0 text-acm-white font-medium hover:!text-acm-blue">
+              Resources
+            </p>
+          </Nav.Link>
+          <Nav.Link href="/registration" className="no-underline">
+            <p className="text-2xl mx-2 flex justify-center items-center mb-0 text-acm-white font-medium hover:!text-acm-blue">
+              Registration
+            </p>
+          </Nav.Link>
         </Navbar.Collapse>
       </>
     </Navbar>
