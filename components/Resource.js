@@ -102,7 +102,7 @@ const Resource = ({
   };
 
   return (
-    <div className="absolute inset-x-0 top-20 w-full">
+    <div className="absolute text-acm-black inset-x-0 top-20 w-full">
       <div className="flex justify-center isolation-auto">
         <form
           className="bg-acm-lightgray rounded-3xl w-1/2 flex flex-col mt-10 p-3"
