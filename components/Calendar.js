@@ -17,7 +17,7 @@ const CalendarEvents = () => {
   return (
     <div className="mb-2 h-[90vh] w-11/12">
       <Calendar
-        className="font-lexend m-0 p-0"
+        className="font-lexend text-acm-white m-0 p-0"
         events={events}
         localizer={mLocalizer}
         defaultView="month"
@@ -34,7 +34,7 @@ const CalendarEvents = () => {
             new Date(event).toLocaleDateString() ==
             new Date().toLocaleDateString()
               ? "!bg-acm-green"
-              : "!bg-acm-white";
+              : "!bg-acm-black";
           return {
             className: `${bg}`,
             style: {
