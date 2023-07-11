@@ -16,6 +16,7 @@ const Resource = ({
   handleHover,
   resources,
   setResources,
+  resourceChanged,
 }) => {
   const [message, setMessage] = useState("");
   const [showSnackBar, setShowSnackBar] = useState(false);
@@ -85,6 +86,7 @@ const Resource = ({
         });
     }
     setOperation("view");
+    resourceChanged();
   };
 
   const snackBar = () => {
@@ -96,9 +98,11 @@ const Resource = ({
   };
 
   const deleteResource = () => {
-    axios.post("/api/deleteResource", { id: resource.id });
     setVisible(false);
+    axios.post("/api/deleteResource", { id: resource.id });
+
     setResources(resources.filter((a) => a.id !== resource.id));
+    resourceChanged();
   };
 
   return (
