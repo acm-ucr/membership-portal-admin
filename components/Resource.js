@@ -16,7 +16,6 @@ const Resource = ({
   handleHover,
   resources,
   setResources,
-  resourceChanged,
 }) => {
   const [message, setMessage] = useState("");
   const [showSnackBar, setShowSnackBar] = useState(false);
