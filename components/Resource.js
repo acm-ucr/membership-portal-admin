@@ -86,7 +86,6 @@ const Resource = ({
         });
     }
     setOperation("view");
-    resourceChanged();
   };
 
   const snackBar = () => {
@@ -102,7 +101,6 @@ const Resource = ({
     axios.post("/api/deleteResource", { id: resource.id });
 
     setResources(resources.filter((a) => a.id !== resource.id));
-    resourceChanged();
   };
 
   return (
