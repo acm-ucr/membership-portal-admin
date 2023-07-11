@@ -96,8 +96,9 @@ const Resource = ({
   };
 
   const deleteResource = () => {
-    axios.post("/api/deleteResource", { id: resource.id });
     setVisible(false);
+    axios.post("/api/deleteResource", { id: resource.id });
+
     setResources(resources.filter((a) => a.id !== resource.id));
   };
 

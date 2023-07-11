@@ -1,27 +1,16 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Col, Row } from "react-bootstrap";
 import Resource from "./Resource";
 import { FaPlus } from "react-icons/fa";
 import ResourceTile from "./ResourceTile";
+import PortalContext from "./PortalContext";
 
 const Resources = () => {
-  const [resources, setResources] = useState([]);
+  const { resources, setResources } = useContext(PortalContext);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState({});
   const [operation, setOperation] = useState("view");
   const [hoverState, handleHover] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("/api/getAllResources")
-      .then((response) => {
-        setResources(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="w-11/12">
