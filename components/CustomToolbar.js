@@ -10,7 +10,7 @@ const CustomToolbar = (event) => {
       <Row className=" w-full">
         <Col
           xs={4}
-          className=" w-full flex justify-start items-center text-3xl font-lexend  font-bold"
+          className=" w-full flex justify-start items-center text-3xl font-lexend font-bold p-3"
         >
           <FaArrowLeft
             onClick={() => event.onNavigate("PREV")}
@@ -20,8 +20,7 @@ const CustomToolbar = (event) => {
             {event.date.getMonth() + 1 < 10
               ? `0${event.date.getMonth() + 1}`
               : event.date.getMonth() + 1}
-            <br />
-            {event.date.getFullYear() % 100}
+            /{event.date.getFullYear() % 100}
           </div>
           <FaArrowRight
             onClick={() => event.onNavigate("NEXT")}
