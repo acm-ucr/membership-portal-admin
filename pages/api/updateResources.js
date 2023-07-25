@@ -6,7 +6,8 @@ export default async function updateResources(req, res) {
   try {
     await updateDoc(doc(db, "resources", req.body.result.id), {
       title: req.body.result.title,
-      time: new Timestamp(req.body.result.time),
+      start_time: new Timestamp(req.body.result.start_time),
+      end_time: new Timestamp(req.body.result.end_time),
       slides: req.body.result.slides,
       youtube: req.body.result.youtube,
       github: req.body.result.github,

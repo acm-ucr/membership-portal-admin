@@ -1,27 +1,16 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Col, Row } from "react-bootstrap";
 import Resource from "./Resource";
 import { FaPlus } from "react-icons/fa";
 import ResourceTile from "./ResourceTile";
+import PortalContext from "./PortalContext";
 
 const Resources = () => {
-  const [resources, setResources] = useState([]);
+  const { resources, setResources } = useContext(PortalContext);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState({});
   const [operation, setOperation] = useState("view");
   const [hoverState, handleHover] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("/api/getAllResources")
-      .then((response) => {
-        setResources(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="w-11/12">
@@ -50,7 +39,7 @@ const Resources = () => {
         />
       )}
 
-      <Row className="flex justify-start items-center">
+      <Row className="flex justify-start items-center w-screen">
         {resources.map((resource, index) => (
           <Col
             key={index}
@@ -69,9 +58,13 @@ const Resources = () => {
           >
             <ResourceTile
               title={resource.data.title}
-              date={new Date(
-                resource.data.time.seconds * 1000
+              start_date={new Date(
+                (resource.data.start_time ? resource.data.start_time.seconds * 1000 : 0)
               ).toLocaleDateString()}
+              end_date={new Date(
+                (resource.data.start_time ? resource.data.end_time.seconds * 1000 : 0)
+              ).toLocaleDateString()}
+
               documentLink={resource.data.slides}
               youtubeLink={resource.data.youtube}
               githubLink={resource.data.github}

@@ -3,7 +3,8 @@ import { FaFileAlt, FaYoutube, FaGithub } from "react-icons/fa";
 
 const ResourceTile = ({
   title,
-  date,
+  start_date,
+  end_date,
   documentLink,
   youtubeLink,
   githubLink,
@@ -11,7 +12,7 @@ const ResourceTile = ({
   return (
     <div>
       <p className="m-0">{title}</p>
-      <p className="m-0">{date}</p>
+      <p className="m-0">{start_date + "->" + end_date}</p>
       <div className="flex items-center justify-center ">
         {documentLink && (
           <a

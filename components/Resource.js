@@ -26,9 +26,13 @@ const Resource = ({
     slides: resource ? resource.data.slides : "",
     youtube: resource ? resource.data.youtube : "",
     github: resource ? resource.data.github : "",
-    time: resource
-      ? getTimeString(new Date(resource.data.time.seconds * 1000))
+    start_time: resource
+      ?  getTimeString(new Date(resource.data.start_time.seconds * 1000))
       : "",
+    end_time: resource
+      ?  getTimeString(new Date(resource.data.end_time.seconds * 1000))
+      : "",
+    
   });
 
   const handleTyping = (e) => {
@@ -46,7 +50,8 @@ const Resource = ({
     const result = {
       id: data.id,
       title: data.title,
-      time: new Date(data.time).getTime() / 1000 + 86400,
+      start_time: new Date(data.start_time).getTime() / 1000 + 86400,
+      end_time: new Date(data.end_time).getTime() / 1000 + 86400,
       github: data.github,
       youtube: data.youtube,
       slides: data.slides,
@@ -63,8 +68,11 @@ const Resource = ({
             {
               data: {
                 ...result,
-                time: {
-                  seconds: new Date(result.time).getTime() / 1000 + 86400,
+                start_time: {
+                  seconds: new Date(result.start_time).getTime() / 1000 + 86400,
+                },
+                end_time: {
+                  seconds: new Date(result.end_time).getTime() / 1000 + 86400,
                 },
               },
               id: result.id,
@@ -135,11 +143,24 @@ const Resource = ({
               onChange={handleTyping}
             />
 
-            <p className="mb-0 font-lexend text-xl font-semibold m-1">Date:</p>
+            <p className="mb-0 font-lexend text-xl font-semibold m-1">Start Date:</p>
             <input
-              name="time"
+              name="start_time"
               type="date"
-              value={data.time}
+              value={data.start_time}
+              disabled={operation === "view"}
+              className={`my-1 block rounded font-lexend text-lg px-2 py-1 w-full focus:ring-2 focus:ring-black focus:outline-none placeholder:text-acm-black ${
+                operation === "view" ? "bg-acm-lightgray" : "bg-white"
+              }`}
+              placeholder=""
+              onChange={handleTyping}
+            />
+
+            <p className="mb-0 font-lexend text-xl font-semibold m-1">End Date:</p>
+            <input
+              name="end_time"
+              type="date"
+              value={data.end_time}
               disabled={operation === "view"}
               className={`my-1 block rounded font-lexend text-lg px-2 py-1 w-full focus:ring-2 focus:ring-black focus:outline-none placeholder:text-acm-black ${
                 operation === "view" ? "bg-acm-lightgray" : "bg-white"
