@@ -58,13 +58,16 @@ const Resources = () => {
           >
             <ResourceTile
               title={resource.data.title}
-              start_date={new Date(
-                (resource.data.start_time ? resource.data.start_time.seconds * 1000 : 0)
+              startDate={new Date(
+                resource.data.startTime
+                  ? resource.data.startTime.seconds * 1000
+                  : 0
               ).toLocaleDateString()}
-              end_date={new Date(
-                (resource.data.start_time ? resource.data.end_time.seconds * 1000 : 0)
+              endDate={new Date(
+                resource.data.startTime
+                  ? resource.data.endTime.seconds * 1000
+                  : 0
               ).toLocaleDateString()}
-
               documentLink={resource.data.slides}
               youtubeLink={resource.data.youtube}
               githubLink={resource.data.github}

@@ -5,8 +5,8 @@ export default async function addResources(req, res) {
   try {
     await addDoc(collection(db, "resources"), {
       title: req.body.result.title,
-      start_time: new Timestamp(req.body.result.start_time),
-      end_time: new Timestamp(req.body.result.end_time),
+      startTime: new Timestamp(req.body.result.startTime),
+      endTime: new Timestamp(req.body.result.endTime),
       slides: req.body.result.slides,
       youtube: req.body.result.youtube,
       github: req.body.result.github,
