@@ -39,7 +39,7 @@ const Resources = () => {
         />
       )}
 
-      <Row className="flex justify-start items-center">
+      <Row className="flex justify-start items-center w-screen">
         {resources.map((resource, index) => (
           <Col
             key={index}
@@ -58,8 +58,15 @@ const Resources = () => {
           >
             <ResourceTile
               title={resource.data.title}
-              date={new Date(
-                resource.data.time.seconds * 1000
+              startDate={new Date(
+                resource.data.startTime
+                  ? resource.data.startTime.seconds * 1000
+                  : 0
+              ).toLocaleDateString()}
+              endDate={new Date(
+                resource.data.startTime
+                  ? resource.data.endTime.seconds * 1000
+                  : 0
               ).toLocaleDateString()}
               documentLink={resource.data.slides}
               youtubeLink={resource.data.youtube}
